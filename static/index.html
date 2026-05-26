@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commodity Intelligence | Prediction & Explainable AI</title>
+    <meta name="description" content="AI-powered commodity price prediction dashboard for Gold, Silver, and Copper with Explainable AI insights.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ═══ Header ═══ -->
+    <header>
+        <div class="header-inner">
+            <div class="logo-group">
+                <span class="logo-icon"><i class="fa-solid fa-gem"></i></span>
+                <span class="logo-title">Commodity Intelligence</span>
+                <span class="logo-badge">Member 1 · XAI</span>
+            </div>
+
+            <div class="commodity-selector" id="commoditySelector">
+                <button class="commodity-chip active-gold" data-key="gold">
+                    <span class="chip-dot gold"></span> Gold
+                </button>
+                <button class="commodity-chip" data-key="silver">
+                    <span class="chip-dot silver"></span> Silver
+                </button>
+                <button class="commodity-chip" data-key="copper">
+                    <span class="chip-dot copper"></span> Copper
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ Main Dashboard ═══ -->
+    <main>
+        <!-- Loader -->
+        <div id="loader" class="card loader-box" style="display:none;grid-column:1/-1">
+            <div class="spinner"></div>
+            <div class="loader-text">TRAINING LINEAR REGRESSION MODELS…</div>
+        </div>
+
+        <!-- Error -->
+        <div id="errorPanel" class="error-box" style="display:none;grid-column:1/-1">
+            <i class="fa-solid fa-triangle-exclamation fa-2x"></i>
+            <div class="error-title">Analysis Failed</div>
+            <p id="errorMsg"></p>
+        </div>
+
+        <!-- Left Column -->
+        <div class="col-l" id="colLeft" style="display:none">
+
+            <!-- Overview -->
+            <div class="card">
+                <div class="overview">
+                    <div class="commodity-info">
+                        <h1 id="commodityName">Gold <span class="ticker-badge" id="tickerBadge">GC=F</span></h1>
+                        <p id="dateLabel">As of 2026-05-26 · USD/oz</p>
+                    </div>
+                    <div class="price-block">
+                        <div class="price-label">Spot Price</div>
+                        <div class="price-val" id="spotPrice">$2,345.80</div>
+                        <div class="price-unit" id="unitLabel">USD / troy ounce</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Predictions -->
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-bolt"></i> Multi-Horizon Forecasts (Linear Regression)</div>
+                <div class="pred-grid">
+                    <div class="pred-card" id="p1Card">
+                        <div class="pred-horizon">Next Trading Day</div>
+                        <div class="pred-price" id="p1Price">$2,350.00</div>
+                        <span class="pred-badge" id="p1Badge"><i class="fa-solid fa-arrow-trend-up"></i> +0.18%</span>
+                    </div>
+                    <div class="pred-card" id="p7Card">
+                        <div class="pred-horizon">7-Day Forecast</div>
+                        <div class="pred-price" id="p7Price">$2,380.50</div>
+                        <span class="pred-badge" id="p7Badge"><i class="fa-solid fa-arrow-trend-up"></i> +1.48%</span>
+                    </div>
+                    <div class="pred-card" id="p30Card">
+                        <div class="pred-horizon">30-Day Forecast</div>
+                        <div class="pred-price" id="p30Price">$2,410.00</div>
+                        <span class="pred-badge" id="p30Badge"><i class="fa-solid fa-arrow-trend-up"></i> +2.73%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart -->
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-chart-line"></i> Price History & Projected Trajectory</div>
+                <div class="chart-wrap"><canvas id="mainChart"></canvas></div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-r" id="colRight" style="display:none">
+
+            <!-- XAI Summary -->
+            <div class="card" style="border-color:rgba(245,166,35,.25);box-shadow:0 0 14px rgba(245,166,35,.05)">
+                <div class="card-title"><i class="fa-solid fa-brain"></i> Explainable AI (XAI) Reasoner</div>
+                <div class="xai-summary" id="xaiSummary">Loading explanation…</div>
+            </div>
+
+            <!-- Factor Meters -->
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-sliders"></i> Critical Technical Factors</div>
+                <div class="xai-meters">
+                    <div class="meter-row">
+                        <div class="meter-header">
+                            <span class="meter-label"><i class="fa-solid fa-arrow-trend-up"></i> Trend Structure</span>
+                            <span class="meter-value" id="trendVal">—</span>
+                        </div>
+                        <div class="meter-track"><div class="meter-fill" id="trendFill" style="width:50%"></div></div>
+                    </div>
+                    <div class="meter-row">
+                        <div class="meter-header">
+                            <span class="meter-label"><i class="fa-solid fa-chart-bar"></i> Volume Commitment</span>
+                            <span class="meter-value" id="volVal">—</span>
+                        </div>
+                        <div class="meter-track"><div class="meter-fill" id="volFill" style="width:50%"></div></div>
+                    </div>
+                    <div class="meter-row">
+                        <div class="meter-header">
+                            <span class="meter-label"><i class="fa-solid fa-chart-area"></i> Volatility Risk</span>
+                            <span class="meter-value" id="volaVal">—</span>
+                        </div>
+                        <div class="meter-track"><div class="meter-fill" id="volaFill" style="width:50%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coefficients -->
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-calculator"></i> Model Feature Weights (XAI)</div>
+                <div class="coef-list" id="coefList"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ═══ Footer ═══ -->
+    <footer>
+        <div class="footer-brand"><i class="fa-solid fa-gem"></i> Commodity Intelligence Engine</div>
+        <p>&copy; 2026 · Member 1: Prediction & Explainable AI · Gold · Silver · Copper</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
