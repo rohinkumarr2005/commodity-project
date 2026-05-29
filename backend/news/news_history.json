@@ -1,0 +1,122 @@
+[
+    {
+        "title": "Gold Prices Surge to All-Time Highs as Central Banks Accelerate Reserves Accumulation",
+        "description": "Central banks across Asia and Europe have purchased record amounts of gold bullion this quarter, driving spot prices past historical resistance levels amidst global monetary policy shifts.",
+        "source": "Global Financial Review",
+        "url": "https://example.com/gold-central-banks",
+        "published_at": "2026-05-29T09:36:25.935379Z",
+        "metal": "gold"
+    },
+    {
+        "title": "Copper Prices Rally as Global EV Power Grid Infrastructure Overhauls Gain Momentum",
+        "description": "Electric vehicle networks and electrical grid upgrades in the US, Europe, and China are demanding millions of tons of high-grade copper, straining existing global stockpiles.",
+        "source": "Infrastructure & Energy News",
+        "url": "https://example.com/copper-ev-grids",
+        "published_at": "2026-05-29T09:36:09.026659Z",
+        "metal": "copper"
+    },
+    {
+        "title": "Solar Energy Boom Drives Silver Demand to Unprecedented Structural Deficit",
+        "description": "The rapid expansion of photovoltaic solar panel manufacturing worldwide is consuming record quantities of silver paste. Industry reports project a supply shortage lasting through the decade.",
+        "source": "Green Energy Metal Journal",
+        "url": "https://example.com/silver-solar-deficit",
+        "published_at": "2026-05-29T06:36:25.948472Z",
+        "metal": "silver"
+    },
+    {
+        "title": "Major Copper Mines in South America Face Prolonged Labor Disputes and Operational Halts",
+        "description": "Supply concerns escalate as two of the world's largest copper mines in Chile and Peru warn of output reductions due to ongoing wage negotiations and environmental permitting delays.",
+        "source": "Andean Mining Report",
+        "url": "https://example.com/copper-south-america-supply",
+        "published_at": "2026-05-29T03:36:09.026659Z",
+        "metal": "copper"
+    },
+    {
+        "title": "Silver Prices Consolidate Near Key Resistance as Industrial Demand Outpaces Mining Supply",
+        "description": "Mining operations in Mexico and Peru report labor challenges and declining ore grades, while industrial fabrication demands for electronics and green tech continue to rise sharply.",
+        "source": "Mining Weekly",
+        "url": "https://example.com/silver-mining-supply",
+        "published_at": "2026-05-29T02:36:25.948472Z",
+        "metal": "silver"
+    },
+    {
+        "title": "Federal Reserve Rate Cut Hints Spark Safe-Haven Demand for Precious Metals",
+        "description": "With inflation cooling toward the Fed's 2% target, analysts anticipate a series of interest rate cuts. Lower yields make non-interest-bearing assets like gold highly attractive to institutional portfolios.",
+        "source": "Market Watch Daily",
+        "url": "https://example.com/gold-fed-rates",
+        "published_at": "2026-05-29T02:36:25.935379Z",
+        "metal": "gold"
+    },
+    {
+        "title": "Retail Investors Pile Into Silver Bullion Citing Favorable Gold-to-Silver Ratio",
+        "description": "With the gold-to-silver price ratio hovering at historically wide levels, retail investors are aggressively buying silver bars, anticipating a rapid catching-up rally.",
+        "source": "Commodity Trading Desk",
+        "url": "https://example.com/silver-gold-ratio",
+        "published_at": "2026-05-28T22:36:25.948472Z",
+        "metal": "silver"
+    },
+    {
+        "title": "LME Copper Inventories Fall to Multi-Year Lows, Prompting Short-Squeeze Fears",
+        "description": "London Metal Exchange warehouses report critically low copper stockpiles. Traders warn that any sudden surge in industrial buying could trigger a rapid upward price squeeze.",
+        "source": "Metal Exchange Journal",
+        "url": "https://example.com/copper-lme-stockpiles",
+        "published_at": "2026-05-28T22:36:09.026659Z",
+        "metal": "copper"
+    },
+    {
+        "title": "Geopolitical Tensions in Eastern Europe and Middle East Keep Gold Bid Strong",
+        "description": "Escalating supply-chain disruptions and geopolitical uncertainty continue to drive investors into safe-haven assets. Gold stands as the premier hedge against systemic risk.",
+        "source": "Macro Economics Outlook",
+        "url": "https://example.com/gold-geopolitical-hedging",
+        "published_at": "2026-05-28T21:36:25.935379Z",
+        "metal": "gold"
+    },
+    {
+        "title": "Silver's Dual Role: Industrial Metal Strength Offsets Weakening Consumer Retail Spending",
+        "description": "While retail physical demand fluctuates, the deep-rooted industrial usage in semiconductors, automotive wiring, and smart devices anchors silver's price action.",
+        "source": "Tech & Metals Insider",
+        "url": "https://example.com/silver-dual-role",
+        "published_at": "2026-05-28T18:36:25.948472Z",
+        "metal": "silver"
+    },
+    {
+        "title": "Gold Retail Buying Booms as Inflation Concerns Linger in Household Portfolios",
+        "description": "Retail demand for physical gold coins and bars remains resilient. Consumer sentiment surveys indicate hedging against purchasing power loss is at a decade high.",
+        "source": "Bullion Bulletin",
+        "url": "https://example.com/gold-retail-demand",
+        "published_at": "2026-05-28T17:36:25.935379Z",
+        "metal": "gold"
+    },
+    {
+        "title": "China's Manufacturing Sector Rebound Triggers Huge Import Orders for Raw Copper Cathodes",
+        "description": "Economic stimulus measures in China have successfully boosted industrial production, resulting in a sudden wave of copper imports to fuel electronics and heavy machinery manufacture.",
+        "source": "Asia Markets Daily",
+        "url": "https://example.com/copper-china-imports",
+        "published_at": "2026-05-28T17:36:09.026659Z",
+        "metal": "copper"
+    },
+    {
+        "title": "Recycled Copper Supply Expands, but Fails to Close the Growing Primary Production Gap",
+        "description": "Although secondary copper scrap recycling has hit all-time highs due to elevated prices, it is insufficient to offset the structural supply deficit facing primary miners.",
+        "source": "Circular Economy Metals",
+        "url": "https://example.com/copper-recycling-gap",
+        "published_at": "2026-05-28T12:36:09.026659Z",
+        "metal": "copper"
+    },
+    {
+        "title": "ETF Inflows into Gold Turn Positive for the First Time in Six Months",
+        "description": "Gold exchange-traded funds recorded net positive inflows last week, signaling a major sentiment shift among institutional asset managers who had previously favored equities.",
+        "source": "ETF Strategy News",
+        "url": "https://example.com/gold-etf-inflows",
+        "published_at": "2026-05-28T11:36:25.935379Z",
+        "metal": "gold"
+    },
+    {
+        "title": "Silver ETFs Experience Volatility Amid Speculative Trading in Options Markets",
+        "description": "Increased retail options trading has introduced short-term volatility to silver futures, leading to heavy trading volumes but range-bound spot prices.",
+        "source": "Options Ledger",
+        "url": "https://example.com/silver-etf-volatility",
+        "published_at": "2026-05-28T10:36:25.948472Z",
+        "metal": "silver"
+    }
+]
