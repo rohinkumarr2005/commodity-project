@@ -2,16 +2,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Run Streamlit Dashboard",
+            "name": "Run Flask App",
             "type": "debugpy",
             "request": "launch",
-            "module": "streamlit",
-            "args": [
-                "run",
-                "${workspaceFolder}/frontend/dashboard/app.py",
-                "--server.port",
-                "8501"
-            ],
+            "program": "${workspaceFolder}/frontend/dashboard/app.py",
+            "console": "integratedTerminal",
             "jinja": true,
             "justMyCode": true,
             "cwd": "${workspaceFolder}"
