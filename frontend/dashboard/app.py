@@ -116,7 +116,7 @@ if not df.empty:
     fig_pred.add_trace(go.Scatter(x=future_dates, y=lower, fill='tonexty', mode='lines', line_color='rgba(241,196,15,0.2)', name='95% Conf'))
     
     fig_pred.update_layout(height=400, template="plotly_dark", margin=dict(l=0, r=0, t=20, b=0))
-    st.plotly_chart(fig_pred, use_container_width=True)
+    st.plotly_chart(fig_pred, width='stretch')
 
     # Row 3: Monte Carlo Fan Chart
     st.divider()
@@ -140,7 +140,7 @@ if not df.empty:
         fig_mc.add_trace(go.Scatter(x=list(range(30)), y=p5, name="5th Pctl", line=dict(dash='dash', color='#da3633')))
         
         fig_mc.update_layout(height=400, template="plotly_dark")
-        st.plotly_chart(fig_mc, use_container_width=True)
+        st.plotly_chart(fig_mc, width='stretch')
     
     with c2:
         st.subheader("🛡️ Risk Metrics (VaR)")
@@ -199,7 +199,7 @@ if not df.empty:
         with c_opt1:
             fig_pie = go.Figure(data=[go.Pie(labels=assets, values=[weights[0], weights[1], weights[2]], hole=.3)])
             fig_pie.update_layout(title="Optimal Allocation", template="plotly_dark")
-            st.plotly_chart(fig_pie, use_container_width=True)
+            st.plotly_chart(fig_pie, width='stretch')
         with c_opt2:
             st.write("**Performance Targets**")
             st.success(f"Expected Annual Return: {perf[0]*100:.2f}%")
@@ -217,7 +217,7 @@ if not df.empty:
         fig_back = go.Figure()
         fig_back.add_trace(go.Scatter(x=cum_ret.index, y=cum_ret, name="Strategy Performance", line=dict(color='#238636')))
         fig_back.update_layout(height=300, template="plotly_dark", title=f"Backtest Sharpe Ratio: {sharpe:.2f}")
-        st.plotly_chart(fig_back, use_container_width=True)
+        st.plotly_chart(fig_back, width='stretch')
     
     with col_back2:
         st.subheader("📤 Data Intelligence Export")
