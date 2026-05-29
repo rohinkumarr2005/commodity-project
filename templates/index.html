@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Optimization -->
+    <title>AI-Based Commodity Intelligence & Decision Support System</title>
+    <meta name="description" content="Get institutional-grade real-time market intelligence, news sentiment analysis, and AI-driven trade recommendations for Gold, Silver, and Copper.">
+    <meta name="keywords" content="gold price, silver price, copper price, commodities, market sentiment, sentiment analysis, AI chatbot, market intelligence">
+    <meta name="author" content="Rohin Commodity">
+    
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom styling stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="theme-gold" id="app-body">
+
+    <div class="app-container">
+        
+        <!-- Dashboard Header -->
+        <header class="app-header glass-panel" id="header-section">
+            <div class="logo-section">
+                <div class="logo-icon">📡</div>
+                <div>
+                    <h1 class="logo-text" id="dashboard-title" style="font-size: 1.2rem;">AI-Based Commodity Intelligence & Decision Support System</h1>
+                    <div class="logo-sub" id="dashboard-subtitle">Unified Real-Time Analytics & Decision Engine</div>
+                </div>
+            </div>
+            <div class="time-section">
+                <div class="utc-badge" id="utc-time-badge">UTC: --:--:--</div>
+                <div class="utc-badge" id="local-time-badge">LOCAL: --:--:--</div>
+            </div>
+        </header>
+
+        <!-- Live Commodities Ticker & Physical Stock Inventories Bar -->
+        <div class="glass-panel ticker-bar" id="live-stock-ticker" style="margin-bottom: 24px; padding: 12px 24px; overflow: hidden;">
+            <div class="ticker-wrap" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+                
+                <!-- Live Status Indicator -->
+                <div class="ticker-live-indicator" id="live-status-indicator" style="display: flex; align-items: center; gap: 8px; font-family: 'Outfit', sans-serif; font-size: 0.7rem; font-weight: 800; color: var(--buy-green); letter-spacing: 0.05em; text-transform: uppercase;">
+                    <span class="flashing-dot" style="width: 8px; height: 8px; background: var(--buy-green); border-radius: 50%; box-shadow: 0 0 10px var(--buy-green); animation: pulseGlow 1.5s infinite ease-in-out;"></span>
+                    <span id="live-status-text">🟢 LIVE DATA | Last Updated: --:--:-- UTC</span>
+                </div>
+                
+                <div class="ticker-items" style="display: flex; gap: 24px; flex-wrap: wrap; font-size: 0.8rem; font-weight: 600;">
+                    <!-- Gold Ticker -->
+                    <div class="ticker-item" style="display: flex; align-items: center; gap: 8px;">
+                        <span style="color: #FFE072; font-family: 'Outfit', sans-serif; font-weight: 700;">Au (Gold)</span>
+                        <span id="ticker-gold-price" style="font-family: monospace;">$2,350.40</span>
+                        <span style="font-size:0.65rem; color:var(--text-secondary);">/ oz</span>
+                        <span id="ticker-gold-change" style="color: var(--buy-green); font-size: 0.7rem; font-weight: 700;">+0.45%</span>
+                        <span style="color: var(--border-glass);">|</span>
+                        <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase;">LME Stock (Est):</span>
+                        <span id="ticker-gold-stock" style="font-family: monospace; color: var(--text-primary);">12,450,200 oz</span>
+                    </div>
+                    <!-- Silver Ticker -->
+                    <div class="ticker-item" style="display: flex; align-items: center; gap: 8px;">
+                        <span style="color: #CBD5E1; font-family: 'Outfit', sans-serif; font-weight: 700;">Ag (Silver)</span>
+                        <span id="ticker-silver-price" style="font-family: monospace;">$29.54</span>
+                        <span style="font-size:0.65rem; color:var(--text-secondary);">/ oz</span>
+                        <span id="ticker-silver-change" style="color: var(--buy-green); font-size: 0.7rem; font-weight: 700;">+1.20%</span>
+                        <span style="color: var(--border-glass);">|</span>
+                        <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase;">LME Stock (Est):</span>
+                        <span id="ticker-silver-stock" style="font-family: monospace; color: var(--text-primary);">848,200,400 oz</span>
+                    </div>
+                    <!-- Copper Ticker -->
+                    <div class="ticker-item" style="display: flex; align-items: center; gap: 8px;">
+                        <span style="color: #EA580C; font-family: 'Outfit', sans-serif; font-weight: 700;">Cu (Copper)</span>
+                        <span id="ticker-copper-price" style="font-family: monospace;">$4.21</span>
+                        <span style="font-size:0.65rem; color:var(--text-secondary);">/ lb</span>
+                        <span id="ticker-copper-change" style="color: var(--sell-red); font-size: 0.7rem; font-weight: 700;">-0.85%</span>
+                        <span style="color: var(--border-glass);">|</span>
+                        <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase;">LME Stock (Est):</span>
+                        <span id="ticker-copper-stock" style="font-family: monospace; color: var(--text-primary);">112,400 t</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metal Selector Row -->
+        <section class="metal-selector-row" id="metal-selector-row">
+            
+            <div class="glass-panel metal-card active" id="metal-card-gold" onclick="selectMetal('gold')">
+                <div class="metal-symbol">Au</div>
+                <div class="metal-info">
+                    <h3>Gold</h3>
+                    <p>Precious / Safe Haven</p>
+                </div>
+            </div>
+
+            <div class="glass-panel metal-card" id="metal-card-silver" onclick="selectMetal('silver')">
+                <div class="metal-symbol">Ag</div>
+                <div class="metal-info">
+                    <h3>Silver</h3>
+                    <p>High-Beta / Solar Tech</p>
+                </div>
+            </div>
+
+            <div class="glass-panel metal-card" id="metal-card-copper" onclick="selectMetal('copper')">
+                <div class="metal-symbol">Cu</div>
+                <div class="metal-info">
+                    <h3>Copper</h3>
+                    <p>Industrial / EV Grids</p>
+                </div>
+            </div>
+            
+        </section>
+
+        <!-- =====================================================================
+             SECTION 1: PREDICTION & EXPLAINABLE AI PANEL (MEMBER 1)
+             ===================================================================== -->
+        <section class="glass-panel prediction-section-full" id="prediction-full-dashboard" style="margin-bottom: 24px;">
+            <h2 class="panel-title" id="pred-section-title" style="margin-bottom: 18px;">Prediction & Explainable AI | Gold</h2>
+            
+            <div class="predictions-top-layout">
+                <!-- Forecast Cards Grid -->
+                <div class="pred-cards-grid">
+                    
+                    <!-- Next Day Card -->
+                    <div class="pred-card">
+                        <div class="pred-card-header">
+                            <span class="pred-timeframe">Next Day Forecast</span>
+                            <span class="trend-badge-large bullish" id="pred-nd-trend">--</span>
+                        </div>
+                        <div class="pred-price-val" id="pred-nd-price">$0.00</div>
+                        <div class="pred-confidence-row">
+                            <span class="label">Confidence</span>
+                            <div class="pred-confidence-bar-container">
+                                <div class="pred-confidence-bar" id="pred-nd-conf-bar" style="width: 0%;"></div>
+                            </div>
+                            <span class="val" id="pred-nd-conf-val">0%</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 7-Day Card -->
+                    <div class="pred-card">
+                        <div class="pred-card-header">
+                            <span class="pred-timeframe">7-Day Forecast</span>
+                            <span class="trend-badge-large bullish" id="pred-sd-trend">--</span>
+                        </div>
+                        <div class="pred-price-val" id="pred-sd-price">$0.00</div>
+                        <div class="pred-confidence-row">
+                            <span class="label">Confidence</span>
+                            <div class="pred-confidence-bar-container">
+                                <div class="pred-confidence-bar" id="pred-sd-conf-bar" style="width: 0%;"></div>
+                            </div>
+                            <span class="val" id="pred-sd-conf-val">0%</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 30-Day Card -->
+                    <div class="pred-card">
+                        <div class="pred-card-header">
+                            <span class="pred-timeframe">30-Day Forecast</span>
+                            <span class="trend-badge-large bullish" id="pred-td-trend">--</span>
+                        </div>
+                        <div class="pred-price-val" id="pred-td-price">$0.00</div>
+                        <div class="pred-confidence-row">
+                            <span class="label">Confidence</span>
+                            <div class="pred-confidence-bar-container">
+                                <div class="pred-confidence-bar" id="pred-td-conf-bar" style="width: 0%;"></div>
+                            </div>
+                            <span class="val" id="pred-td-conf-val">0%</span>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Prediction XAI Explanation Section -->
+                <div class="pred-xai-box">
+                    <h3 class="xai-title" style="margin-top: 0;">Explainable AI: Price Projections</h3>
+                    <div class="xai-lists-grid">
+                        <div class="xai-list-box positive">
+                            <div class="list-title">Model Positive Indicators</div>
+                            <ul class="xai-list checkmark-list" id="pred-positives-list">
+                                <!-- Populated dynamically by JS -->
+                            </ul>
+                        </div>
+                        <div class="xai-list-box negative" style="margin-top: 8px;">
+                            <div class="list-title">Model Downside Risk Warnings</div>
+                            <ul class="xai-list warning-list" id="pred-negatives-list">
+                                <!-- Populated dynamically by JS -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Market Comparison Dashboard -->
+            <div class="comparison-wrapper" style="margin-top: 24px; border-top: 1px solid var(--border-glass); padding-top: 24px;">
+                <h3 class="xai-title" style="margin-top: 0; margin-bottom: 16px;">Cross-Commodity Prediction Comparison</h3>
+                <div class="comparison-grid">
+                    
+                    <!-- Table Container -->
+                    <div class="table-container">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Metal</th>
+                                    <th>Recommendation</th>
+                                    <th>Confidence</th>
+                                    <th>Risk Level</th>
+                                    <th>Sentiment Index</th>
+                                    <th>Market Outlook</th>
+                                </tr>
+                            </thead>
+                            <tbody id="comparison-table-body">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; color: var(--text-secondary); padding: 24px;">
+                                        Processing comparative matrices across all metal sectors...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Smart Portfolio Highlights -->
+                    <div class="highlight-cards-container">
+                        
+                        <div class="highlight-card best" id="highlight-best">
+                            <div class="card-icon">🏆</div>
+                            <div class="card-content">
+                                <div class="card-label">Best Investment</div>
+                                <div class="card-val" id="highlight-best-val">Evaluating...</div>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-card safest" id="highlight-safest">
+                            <div class="card-icon">🛡️</div>
+                            <div class="card-content">
+                                <div class="card-label">Lowest Risk</div>
+                                <div class="card-val" id="highlight-safest-val">Evaluating...</div>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-card growth" id="highlight-growth">
+                            <div class="card-icon">⚡</div>
+                            <div class="card-content">
+                                <div class="card-label">Highest Growth</div>
+                                <div class="card-val" id="highlight-growth-val">Evaluating...</div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             SECTION 2: SIMULATION & SCENARIO ENGINE PANEL (MEMBER 2)
+             ===================================================================== -->
+        <section class="glass-panel simulation-section-full" id="simulation-full-dashboard" style="margin-bottom: 24px;">
+            <h2 class="panel-title" id="sim-section-title" style="margin-bottom: 18px;">Monte Carlo Projections & Scenario Stress Engine</h2>
+            
+            <div class="simulations-layout-grid">
+                
+                <!-- Left: Monte Carlo Percentile Cards & Paths Visualizer -->
+                <div class="sim-left-panel">
+                    <h3 class="xai-title" style="margin-top: 0; margin-bottom: 14px;">30-Day Monte Carlo Projections</h3>
+                    
+                    <div class="sim-percentile-cards">
+                        <!-- Worst Case -->
+                        <div class="sim-percentile-card worst">
+                            <div class="card-label">Worst Case (10th Pctl)</div>
+                            <div class="card-val" id="sim-worst-price">$0.00</div>
+                            <div class="card-desc">Stress Floor Support</div>
+                        </div>
+                        <!-- Average Case -->
+                        <div class="sim-percentile-card average">
+                            <div class="card-label">Average Case (50th Pctl)</div>
+                            <div class="card-val" id="sim-avg-price">$0.00</div>
+                            <div class="card-desc">Neutral Expected Drift</div>
+                        </div>
+                        <!-- Best Case -->
+                        <div class="sim-percentile-card best">
+                            <div class="card-label">Best Case (90th Pctl)</div>
+                            <div class="card-val" id="sim-best-price">$0.00</div>
+                            <div class="card-desc">Momentum Breakout Ceiling</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dynamic Path Distribution Visualizer -->
+                    <div class="path-visualizer-container" style="margin-top: 18px; background: rgba(0,0,0,0.15); border-radius: 12px; padding: 16px; border: 1px solid var(--border-glass);">
+                        <div class="visualizer-header" style="display:flex; justify-content:space-between; font-size:0.7rem; color:var(--text-secondary); font-weight:600; text-transform:uppercase; margin-bottom:8px;">
+                            <span>Worst-Case Shock Floor</span>
+                            <span>Median Baseline</span>
+                            <span>Best-Case Breakout</span>
+                        </div>
+                        <div class="distribution-gradient-bar" style="height:12px; background: linear-gradient(90deg, var(--sell-red) 0%, var(--hold-yellow) 50%, var(--buy-green) 100%); border-radius:6px; position:relative; box-shadow:0 0 10px rgba(255,255,255,0.05);">
+                            <!-- Markers representing simulated path ranges -->
+                            <div id="marker-worst" style="position:absolute; width:14px; height:14px; border-radius:50%; background:#FFF; border:3px solid var(--sell-red); top:-1px; left:10%; transition: left 0.8s ease;"></div>
+                            <div id="marker-avg" style="position:absolute; width:14px; height:14px; border-radius:50%; background:#FFF; border:3px solid var(--hold-yellow); top:-1px; left:50%; transition: left 0.8s ease;"></div>
+                            <div id="marker-best" style="position:absolute; width:14px; height:14px; border-radius:50%; background:#FFF; border:3px solid var(--buy-green); top:-1px; left:90%; transition: left 0.8s ease;"></div>
+                        </div>
+                        <div class="visualizer-labels" style="display:flex; justify-content:space-between; font-size:0.75rem; font-family:'Outfit',sans-serif; font-weight:700; margin-top:8px;">
+                            <span id="visual-worst-val" style="color:var(--sell-red);">$0.00</span>
+                            <span id="visual-avg-val" style="color:var(--hold-yellow);">$0.00</span>
+                            <span id="visual-best-val" style="color:var(--buy-green);">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right: Macro Scenario Engine Simulator -->
+                <div class="sim-right-panel">
+                    <h3 class="xai-title" style="margin-top: 0; margin-bottom: 14px;">Macroeconomic Stress Simulator</h3>
+                    
+                    <div class="scenario-selector-row" style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+                        <span style="font-size:0.8rem; font-weight:600; color:var(--text-secondary);">Select Scenario:</span>
+                        <select id="scenario-selector" class="scenario-dropdown" onchange="runScenarioSimulation()" style="flex-grow:1; background:rgba(13,20,38,0.7); border:1px solid var(--border-glass); border-radius:8px; padding:8px 12px; color:var(--text-primary); outline:none; cursor:pointer; font-size:0.8rem; font-weight:600; transition:var(--transition-smooth);">
+                            <option value="geopolitical_conflict">⚔️ Geopolitical Conflict</option>
+                            <option value="economic_recession">📉 Economic Recession</option>
+                            <option value="market_crash">💥 Market Crash</option>
+                            <option value="inflation_increase">💸 Inflation Increase</option>
+                            <option value="inflation_decrease">⚖️ Inflation Decrease</option>
+                            <option value="interest_rate_cuts">🔓 Interest Rate Cuts</option>
+                            <option value="interest_rate_hikes">🔒 Interest Rate Hikes</option>
+                        </select>
+                    </div>
+                    
+                    <div class="scenario-results-grid" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-bottom:16px;">
+                        <!-- Gold Impact -->
+                        <div class="scenario-result-card" style="background:rgba(255,255,255,0.02); border:1px solid var(--border-glass); border-radius:10px; padding:10px; text-align:center;">
+                            <div style="font-size:0.65rem; color:var(--text-secondary); text-transform:uppercase; margin-bottom:4px;">Gold Shock</div>
+                            <div class="impact-val" id="scen-gold-impact" style="font-family:'Outfit',sans-serif; font-size:1.25rem; font-weight:800; color:var(--buy-green);">+0.0%</div>
+                        </div>
+                        <!-- Silver Impact -->
+                        <div class="scenario-result-card" style="background:rgba(255,255,255,0.02); border:1px solid var(--border-glass); border-radius:10px; padding:10px; text-align:center;">
+                            <div style="font-size:0.65rem; color:var(--text-secondary); text-transform:uppercase; margin-bottom:4px;">Silver Shock</div>
+                            <div class="impact-val" id="scen-silver-impact" style="font-family:'Outfit',sans-serif; font-size:1.25rem; font-weight:800; color:var(--sell-red);">-0.0%</div>
+                        </div>
+                        <!-- Copper Impact -->
+                        <div class="scenario-result-card" style="background:rgba(255,255,255,0.02); border:1px solid var(--border-glass); border-radius:10px; padding:10px; text-align:center;">
+                            <div style="font-size:0.65rem; color:var(--text-secondary); text-transform:uppercase; margin-bottom:4px;">Copper Shock</div>
+                            <div class="impact-val" id="scen-copper-impact" style="font-family:'Outfit',sans-serif; font-size:1.25rem; font-weight:800; color:var(--sell-red);">-0.0%</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dynamic Stress Explanation -->
+                    <div class="decision-explanation" id="scenario-explanation-box" style="border-left-color: #EF4444; line-height:1.5;">
+                        Loading stress scenarios parameters...
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             SECTION 3: NEWS, SENTIMENT & DECISION INTELLIGENCE (MEMBER 3)
+             ===================================================================== -->
+        <section class="glass-panel news-decision-section" style="margin-bottom: 24px; padding: 24px;">
+            <h2 class="panel-title" style="margin-bottom: 18px;">Market News, Sentiment & Decision Intelligence</h2>
+            
+            <div class="news-decision-layout-grid" style="display: grid; grid-template-columns: 420px 1fr; gap: 24px; align-items: start;">
+                
+                <!-- Left: Decision card & Sentiment charts -->
+                <div class="m3-left-col" style="display: flex; flex-direction: column; gap: 24px;">
+                    
+                    <!-- Decision Card -->
+                    <div class="glass-panel decision-panel" id="decision-panel" style="padding: 20px;">
+                        <h3 class="xai-title" style="margin-top: 0; margin-bottom: 12px;">Decision Engine Stance</h3>
+                        <div class="decision-badge-container" style="margin: 12px 0;">
+                            <div class="decision-badge buy" id="rec-badge" style="font-size: 1.8rem; padding: 8px 30px; border-radius: 10px;">BUY</div>
+                        </div>
+                        <div class="decision-metrics" style="margin-bottom: 12px;">
+                            <div class="metric-box" style="padding: 8px;">
+                                <div class="metric-label">Confidence</div>
+                                <div class="metric-val" id="confidence-val" style="font-size: 1rem;">--%</div>
+                            </div>
+                            <div class="metric-box" style="padding: 8px;">
+                                <div class="metric-label">Risk Level</div>
+                                <div class="metric-val low" id="risk-val" style="font-size: 1rem;">--</div>
+                            </div>
+                            <div class="metric-box" style="grid-column: span 2; padding: 8px;">
+                                <div class="metric-label">Market Outlook</div>
+                                <div class="metric-val bullish" id="outlook-val" style="font-size: 1rem;">--</div>
+                            </div>
+                        </div>
+                        <div class="decision-explanation" id="decision-explanation" style="font-size: 0.75rem; padding: 8px;">
+                            Fetching latest parameters...
+                        </div>
+                        
+                        <!-- Explainable AI sub-panel -->
+                        <div class="xai-container" id="xai-container" style="margin-top: 12px; padding-top: 12px;">
+                            <h3 class="xai-title" style="font-size: 0.75rem; margin-bottom: 8px;">Decision Rationale</h3>
+                            <div class="xai-lists-grid">
+                                <div class="xai-list-box positive" style="padding: 6px 10px;">
+                                    <ul class="xai-list checkmark-list" id="xai-positives-list"></ul>
+                                </div>
+                                <div class="xai-list-box negative" style="padding: 6px 10px; margin-top: 6px;">
+                                    <ul class="xai-list warning-list" id="xai-negatives-list"></ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Confidence Breakdown progress meters -->
+                        <div class="cb-container" id="cb-container" style="margin-top: 12px; padding-top: 12px;">
+                            <h3 class="xai-title" style="font-size: 0.75rem; margin-bottom: 8px;">Confidence Contributors</h3>
+                            <div class="cb-meters-grid">
+                                <div class="cb-meter-row">
+                                    <div class="meter-label">News Sentiment</div>
+                                    <div class="meter-bar-container"><div class="meter-bar sentiment" id="cb-sentiment-bar"></div></div>
+                                    <div class="meter-val-pct" id="cb-sentiment-val">0%</div>
+                                </div>
+                                <div class="cb-meter-row">
+                                    <div class="meter-label">Market Trend</div>
+                                    <div class="meter-bar-container"><div class="meter-bar trend" id="cb-trend-bar"></div></div>
+                                    <div class="meter-val-pct" id="cb-trend-val">0%</div>
+                                </div>
+                                <div class="cb-meter-row">
+                                    <div class="meter-label">Macro Factors</div>
+                                    <div class="meter-bar-container"><div class="meter-bar macro" id="cb-macro-bar"></div></div>
+                                    <div class="meter-val-pct" id="cb-macro-val">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Market Sentiment Card -->
+                    <div class="glass-panel sentiment-panel" id="sentiment-panel" style="padding: 20px;">
+                        <h3 class="xai-title" style="margin-top: 0; margin-bottom: 8px;">News Sentiment Index</h3>
+                        <div class="chart-container" style="height: 150px; margin: 8px 0;">
+                            <canvas id="sentimentChart"></canvas>
+                        </div>
+                        <div class="sentiment-breakdown" style="margin-top: 8px;">
+                            <div class="sentiment-pill pos">
+                                <div class="dot"></div>
+                                <span>Pos</span>
+                                <span id="pos-pct">--%</span>
+                            </div>
+                            <div class="sentiment-pill neu">
+                                <div class="dot"></div>
+                                <span>Neu</span>
+                                <span id="neu-pct">--%</span>
+                            </div>
+                            <div class="sentiment-pill neg">
+                                <div class="dot"></div>
+                                <span>Neg</span>
+                                <span id="neg-pct">--%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Right: News timeline column -->
+                <div class="glass-panel news-col" id="news-column" style="height: 605px; padding: 20px;">
+                    <div class="panel-header" style="margin-bottom: 12px;">
+                        <h3 class="xai-title" style="margin-top:0; border-bottom:none; padding-bottom:0;">Metals News Flow Timeline</h3>
+                        <button class="refresh-btn" id="refresh-news-btn" onclick="refreshData()" style="padding: 4px 10px; font-size: 0.75rem;">
+                            <span>🔄</span> Refresh News
+                        </button>
+                    </div>
+                    <div class="news-timeline" id="news-timeline">
+                        <div style="text-align: center; color: var(--text-secondary); margin-top: 100px;">
+                            Loading market news intelligence stream...
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             AI COMMODITY DECISION SUPPORT SYSTEM (UPGRADED AI PANEL)
+             ================================        <section class="glass-panel ai-panel-upgraded" id="ai-intelligence-terminal-section" style="margin-bottom: 24px; padding: 24px;">
+            
+            <!-- Upgraded AI Strategic Advisor Terminal -->
+            <div class="terminal-chat-block" style="display: flex; flex-direction: column; background: rgba(6, 9, 19, 0.4); border-radius: 16px; padding: 24px; border: 1px solid var(--border-glass); min-height: 650px; justify-content: space-between; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);">
+                
+                <!-- Premium Header Area inside Chat Block -->
+                <div class="panel-header-premium" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 16px; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                    <div class="title-area">
+                        <h2 class="panel-title-large" style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, #FFF 0%, var(--accent-color, #EAB308) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 0.02em;">
+                            AI Strategic Advisor Terminal
+                        </h2>
+                        <div class="panel-subtitle-premium" style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; font-weight: 500;">
+                            AI Commodity Decision Support Assistant
+                        </div>
+                    </div>
+                    <div class="live-status-area-premium" style="text-align: right;">
+                        <div class="live-badge-premium" id="live-indicator-premium" style="display: flex; align-items: center; justify-content: flex-end; gap: 8px; font-size: 0.75rem; font-weight: 700; color: var(--buy-green); text-transform: uppercase;">
+                            <span class="flashing-dot" style="width: 8px; height: 8px; background: var(--buy-green); border-radius: 50%; box-shadow: 0 0 10px var(--buy-green); animation: pulseGlow 1.5s infinite ease-in-out;"></span>
+                            <span id="live-status-text-premium">🟢 LIVE DATA | Last Updated: --:-- UTC</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Conversation Thread -->
+                <div class="chat-messages-container" id="chat-messages-premium" style="flex-grow: 1; overflow-y: auto; margin-bottom: 20px; padding-right: 4px; display: flex; flex-direction: column; gap: 16px; height: 420px;">
+                    <div class="chat-bubble ai" id="chat-welcome-bubble" style="white-space: pre-line; line-height: 1.6;">Welcome to Metals Intelligence.
+
+I can help you:
+
+• Find the best investment opportunity
+• Compare Gold, Silver, and Copper
+• Analyze risks and opportunities
+• Explain market outlooks
+• Summarize recent developments
+
+Try asking:
+
+• Which metal is the best investment today?
+• Compare Gold and Copper
+• What are the biggest risks right now?
+• Why is Gold bullish?
+• Which metal has the highest growth potential?</div>
+                </div>
+                
+                <!-- Quick Action Buttons -->
+                <div class="quick-questions-label" style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 10px; letter-spacing: 0.05em;">
+                    ⚡ Strategic Advisor Queries
+                </div>
+                <div class="quick-questions-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
+                    <button class="premium-action-btn" onclick="askChatbotPremium('Which metal is the best investment today?')">Best Investment Today</button>
+                    <button class="premium-action-btn" onclick="askChatbotPremium('Compare Gold and Silver')">Compare Gold & Silver</button>
+                    <button class="premium-action-btn" onclick="askChatbotPremium('Compare Gold and Copper')">Compare Gold & Copper</button>
+                    <button class="premium-action-btn" onclick="askChatbotPremium('Provide a summary of the metals market')">Market Summary</button>
+                    <button class="premium-action-btn" onclick="askChatbotPremium('What are the active risks today?')">Risk Analysis</button>
+                    <button class="premium-action-btn" onclick="askChatbotPremium('Which metal has the highest growth potential?')">Growth Opportunities</button>
+                    <button class="premium-action-btn" onclick="askChatbotPremium('Which metal is the safest investment?')">Safest Investment</button>
+                    <button class="premium-action-btn" onclick="askChatbotPremium('Why is Gold currently bullish?')">Why is Gold Bullish?</button>
+                </div>
+                
+                <!-- Chat Input Field -->
+                <div class="chat-input-bar-premium" style="display: flex; gap: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: 10px; padding: 6px;">
+                    <input type="text" class="chat-input-premium" id="chat-input-premium" placeholder="Ask about market conditions..." onkeypress="handleChatEnterPremium(event)" style="flex-grow: 1; background: transparent; border: none; outline: none; color: var(--text-primary); padding: 8px 16px; font-size: 0.9rem;">
+                    <button class="chat-send-btn-premium" id="chat-send-btn-premium" onclick="sendChatMessagePremium()" style="background: linear-gradient(135deg, var(--accent-color, #EAB308) 0%, #D97706 100%); color: #000; border: none; border-radius: 8px; padding: 8px 24px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">Send</button>
+                </div>
+                
+            </div>
+        </section>
+        
+        <!-- Platform Quick Instructions / Details -->
+        <footer class="glass-panel instructions-section" id="footer-instructions">
+            <h2 class="panel-title" style="margin-bottom: 12px;">AI-Based Commodity Intelligence & Decision Support System - Setup Summary</h2>
+            <div class="instructions-list">
+                <div class="instruction-step">
+                    <h5>1. Data Integrity</h5>
+                    <p>This platform connects directly to the <strong>NewsAPI</strong>. If your API key is not configured, the platform activates its high-fidelity <strong>Mock Engine</strong> to feed real-time simulated geopolitical and monetary updates.</p>
+                </div>
+                <div class="instruction-step">
+                    <h5>2. Execution & Launch</h5>
+                    <p>Activate the local backend server via terminal: <code>python backend/app.py</code> and access the dashboard immediately at <code>http://127.0.0.1:5000</code>.</p>
+                </div>
+            </div>
+        </footer>
+        
+    </div>
+
+    <!-- Main Javascript controller -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

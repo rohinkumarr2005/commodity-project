@@ -1,0 +1,42 @@
+[
+    {
+        "title": "Copper Prices Rally as Global EV Power Grid Infrastructure Overhauls Gain Momentum",
+        "description": "Electric vehicle networks and electrical grid upgrades in the US, Europe, and China are demanding millions of tons of high-grade copper, straining existing global stockpiles.",
+        "source": "Infrastructure & Energy News",
+        "url": "https://example.com/copper-ev-grids",
+        "published_at": "2026-05-29T13:28:36.182725Z",
+        "metal": "copper"
+    },
+    {
+        "title": "Major Copper Mines in South America Face Prolonged Labor Disputes and Operational Halts",
+        "description": "Supply concerns escalate as two of the world's largest copper mines in Chile and Peru warn of output reductions due to ongoing wage negotiations and environmental permitting delays.",
+        "source": "Andean Mining Report",
+        "url": "https://example.com/copper-south-america-supply",
+        "published_at": "2026-05-29T09:28:36.182725Z",
+        "metal": "copper"
+    },
+    {
+        "title": "LME Copper Inventories Fall to Multi-Year Lows, Prompting Short-Squeeze Fears",
+        "description": "London Metal Exchange warehouses report critically low copper stockpiles. Traders warn that any sudden surge in industrial buying could trigger a rapid upward price squeeze.",
+        "source": "Metal Exchange Journal",
+        "url": "https://example.com/copper-lme-stockpiles",
+        "published_at": "2026-05-29T02:28:36.182725Z",
+        "metal": "copper"
+    },
+    {
+        "title": "China's Manufacturing Sector Rebound Triggers Huge Import Orders for Raw Copper Cathodes",
+        "description": "Economic stimulus measures in China have successfully boosted industrial production, resulting in a sudden wave of copper imports to fuel electronics and heavy machinery manufacture.",
+        "source": "Asia Markets Daily",
+        "url": "https://example.com/copper-china-imports",
+        "published_at": "2026-05-28T21:28:36.182725Z",
+        "metal": "copper"
+    },
+    {
+        "title": "Recycled Copper Supply Expands, but Fails to Close the Growing Primary Production Gap",
+        "description": "Although secondary copper scrap recycling has hit all-time highs due to elevated prices, it is insufficient to offset the structural supply deficit facing primary miners.",
+        "source": "Circular Economy Metals",
+        "url": "https://example.com/copper-recycling-gap",
+        "published_at": "2026-05-28T18:28:36.182725Z",
+        "metal": "copper"
+    }
+]
