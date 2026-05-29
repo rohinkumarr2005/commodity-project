@@ -1,0 +1,200 @@
+:root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #f0f6fc;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --gold: #f1c40f;
+    --buy: #238636;
+    --sell: #da3633;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 260px;
+    background: #010409;
+    border-right: 1px solid var(--border);
+    padding: 2rem;
+    position: fixed;
+    height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 260px;
+    padding: 2rem;
+    max-width: 1200px;
+}
+
+header {
+    margin-bottom: 2rem;
+}
+
+.live-indicator {
+    color: var(--buy);
+    font-size: 0.75rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.4
+    }
+
+    50% {
+        opacity: 1
+    }
+
+    100% {
+        opacity: 0.4
+    }
+}
+
+.price-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: 0.3s;
+}
+
+.card:hover {
+    border-color: var(--accent);
+}
+
+.price-main {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+}
+
+.price-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.price-gram {
+    font-size: 0.8rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+}
+
+.change {
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.change.positive {
+    color: var(--buy);
+    background: rgba(35, 134, 54, 0.1);
+}
+
+.change.negative {
+    color: var(--sell);
+    background: rgba(218, 54, 51, 0.1);
+}
+
+.analysis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 4px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 10px;
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.btn-predict {
+    width: 100%;
+    padding: 12px;
+    background: var(--accent);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.prediction-result-box {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    border: 1px dashed var(--accent);
+    border-radius: 8px;
+}
+
+.input-hint {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-bottom: 10px;
+}
+
+.disclaimer-box {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-left: 3px solid var(--sell);
+    font-size: 0.8rem;
+}
+
+.disclaimer-box h5 {
+    color: var(--sell);
+    margin-bottom: 5px;
+}
+
+@media (max-width: 900px) {
+
+    .price-cards,
+    .analysis-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}
