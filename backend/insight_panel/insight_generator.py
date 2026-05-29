@@ -51,6 +51,15 @@ def get_ranked_metals():
     # Sort descending by opportunity score
     return sorted(contexts, key=lambda x: x["opportunity_score"], reverse=True)
 
+class CommodityAnalystEngine:
+    def __init__(self, services=None):
+        self.services = services
+
+    def generate_response(self, current_metal, query):
+        # Extracts actual metal name from UI string like 'Gold (GC=F)' -> 'Gold'
+        metal_clean = current_metal.split(" ")[0].strip()
+        return generate_chat_response(query, metal_clean)
+
 def generate_conclusion_paragraph(ranked):
     """Generates standard AI conclusion summary for portfolio balance."""
     best = ranked[0]["metal"]

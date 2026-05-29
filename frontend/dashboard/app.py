@@ -11,7 +11,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'
 
 from backend.prediction.predict import fetch_commodity_data, add_technical_indicators, run_monte_carlo_sim, calculate_risk_metrics, get_news_sentiment, apply_scenarios, get_volatility_stats, get_seasonal_factor, get_correlation_coefficient, run_backtest
 from backend.prediction.models_engine import get_ensemble_prediction, get_shap_explanations
-from backend.sentiment_analysis.sentiment import CommodityAnalystEngine
+from backend.insight_panel.insight_generator import CommodityAnalystEngine
 import time
 import shap
 import matplotlib.pyplot as plt
